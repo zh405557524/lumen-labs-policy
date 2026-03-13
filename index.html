@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>光点工作室 · 钢琴视奏练习 | Luminous Studio - Piano Sight-Reading</title>
+    <meta
+      name="description"
+      content="光点工作室 Luminous Studio - 专注音乐与工具类应用的独立工作室。首款应用「钢琴视奏练习」为钢琴学习者打造高效的视奏训练体验。"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg-gradient-start: #020617;
+        --bg-gradient-end: #0f172a;
+        --accent: #38bdf8;
+        --accent-soft: rgba(56, 189, 248, 0.2);
+        --accent-strong: rgba(56, 189, 248, 0.9);
+        --accent-purple: #a855f7;
+        --text-main: #e5e7eb;
+        --text-muted: #9ca3af;
+        --card-bg: rgba(15, 23, 42, 0.85);
+        --border-subtle: rgba(148, 163, 184, 0.35);
+        --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.5);
+        --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background: radial-gradient(circle at top left, #1d2438 0, transparent 50%),
+          radial-gradient(circle at bottom right, #111827 0, transparent 55%),
+          linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+        color: var(--text-main);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .noise-overlay {
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        opacity: 0.06;
+        mix-blend-mode: soft-light;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E");
+        z-index: 0;
+      }
+
+      .page-root {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 32px 20px 40px;
+      }
+
+      header.site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .logo-mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        background: radial-gradient(circle at 30% 20%, #fefce8 0, #facc15 20%, #f97316 45%, transparent 60%),
+          radial-gradient(circle at 70% 80%, #38bdf8 0, #0ea5e9 25%, transparent 60%);
+        box-shadow: 0 0 20px rgba(250, 204, 21, 0.7),
+          0 0 40px rgba(56, 189, 248, 0.55);
+      }
+
+      .logo-text-cn {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+      }
+
+      .logo-text-en {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        letter-spacing: 0.16em;
+      }
+
+      .header-tagline {
+        text-align: right;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .header-tagline span.highlight {
+        color: var(--accent);
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .hero {
+        border-radius: 24px;
+        padding: 28px 24px 26px;
+        background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18) 0, transparent 52%),
+          radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.18) 0, transparent 52%),
+          linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.96));
+        border: 1px solid var(--border-subtle);
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.65);
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
+        gap: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(
+          135deg,
+          rgba(148, 163, 184, 0.08) 1px,
+          transparent 1px
+        );
+        background-size: 26px 26px;
+        opacity: 0.35;
+        mix-blend-mode: soft-light;
+        pointer-events: none;
+      }
+
+      .hero-main {
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-eyebrow {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+
+      .hero-title-cn {
+        font-size: clamp(26px, 4vw, 32px);
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        margin: 0 0 6px;
+        text-shadow: 0 0 16px rgba(56, 189, 248, 0.75);
+      }
+
+      .hero-title-en {
+        font-size: 14px;
+        color: var(--text-muted);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+
+      .hero-copy {
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--text-main);
+        max-width: 520px;
+        margin-bottom: 16px;
+      }
+
+      .hero-copy-en {
+        font-size: 12px;
+        line-height: 1.7;
+        color: var(--text-muted);
+        max-width: 520px;
+        margin-bottom: 20px;
+      }
+
+      .hero-cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .btn-primary {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 10px 18px;
+        border-radius: 999px;
+        border: 1px solid var(--accent-soft);
+        color: var(--accent-strong);
+        background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), transparent 60%),
+          linear-gradient(135deg, rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.9));
+        text-decoration: none;
+        font-size: 13px;
+        cursor: default;
+        box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.26);
+        white-space: nowrap;
+      }
+
+      .btn-primary::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        box-shadow: var(--shadow-glow);
+        opacity: 0;
+        transition: opacity 160ms ease-out;
+      }
+
+      .btn-primary:hover::after {
+        opacity: 1;
+      }
+
+      .btn-primary-label-cn {
+        font-weight: 600;
+      }
+
+      .btn-primary-label-en {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .hero-pill {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .hero-pill span {
+        color: var(--accent-purple);
+      }
+
+      .hero-visual {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .hero-card {
+        position: relative;
+        width: 100%;
+        max-width: 320px;
+        padding: 18px 18px 16px;
+        border-radius: 20px;
+        background: radial-gradient(circle at top, rgba(56, 189, 248, 0.2) 0, transparent 55%),
+          linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
+        border: 1px solid rgba(148, 163, 184, 0.55);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+        overflow: hidden;
+      }
+
+      .hero-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .hero-card-title-cn {
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .hero-card-title-en {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .hero-card-tag {
+        font-size: 10px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: rgba(34, 197, 94, 0.08);
+        color: #4ade80;
+        border: 1px solid rgba(34, 197, 94, 0.4);
+      }
+
+      .hero-piano-grid {
+        margin-top: 6px;
+        padding: 10px 10px 9px;
+        border-radius: 14px;
+        background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.24), transparent 60%),
+          rgba(15, 23, 42, 0.95);
+        border: 1px solid rgba(75, 85, 99, 0.75);
+      }
+
+      .hero-staff {
+        position: relative;
+        height: 56px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        overflow: hidden;
+        background: radial-gradient(circle at top, rgba(15, 23, 42, 0.2), transparent 65%);
+      }
+
+      .hero-staff-lines {
+        position: absolute;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+          to bottom,
+          rgba(148, 163, 184, 0.5) 0,
+          rgba(148, 163, 184, 0.5) 1px,
+          transparent 1px,
+          transparent 9px
+        );
+        opacity: 0.9;
+      }
+
+      .hero-notes {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        color: var(--accent-strong);
+        font-size: 12px;
+        text-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+      }
+
+      .hero-notes span {
+        transform-origin: center;
+      }
+
+      .hero-notes span:nth-child(2) {
+        transform: translateY(-4px);
+      }
+
+      .hero-notes span:nth-child(3) {
+        transform: translateY(4px);
+      }
+
+      .hero-piano-keys {
+        display: grid;
+        grid-template-columns: repeat(14, 1fr);
+        height: 46px;
+        border-radius: 9px;
+        overflow: hidden;
+        background: #020617;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      }
+
+      .hero-key-white {
+        background: linear-gradient(to bottom, #f9fafb, #e5e7eb);
+        border-right: 1px solid rgba(148, 163, 184, 0.6);
+      }
+
+      .hero-key-black-wrap {
+        position: relative;
+      }
+
+      .hero-key-black {
+        position: absolute;
+        top: 0;
+        left: 52%;
+        transform: translateX(-50%);
+        width: 64%;
+        height: 60%;
+        border-radius: 0 0 7px 7px;
+        background: linear-gradient(to bottom, #111827, #020617);
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.9);
+      }
+
+      .hero-card-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .hero-card-meta strong {
+        color: #facc15;
+      }
+
+      .hero-card-dots {
+        display: inline-flex;
+        gap: 4px;
+      }
+
+      .hero-card-dots span {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.55);
+      }
+
+      .hero-card-dots span.active {
+        background: var(--accent);
+        box-shadow: 0 0 8px rgba(56, 189, 248, 0.75);
+      }
+
+      section {
+        border-radius: 20px;
+        padding: 22px 20px 20px;
+        background: linear-gradient(
+            135deg,
+            rgba(15, 23, 42, 0.96),
+            rgba(15, 23, 42, 0.9)
+          ),
+          radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 60%);
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.85);
+      }
+
+      section + section {
+        margin-top: 4px;
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 8px;
+        letter-spacing: 0.08em;
+      }
+
+      .section-title-en {
+        font-size: 12px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: 14px;
+      }
+
+      .section-body {
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--text-main);
+      }
+
+      .section-body p {
+        margin: 0 0 10px;
+      }
+
+      .section-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-body-en {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .pill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .pill {
+        font-size: 11px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.32), transparent 60%),
+          rgba(15, 23, 42, 0.9);
+        color: var(--text-main);
+        white-space: nowrap;
+      }
+
+      .pill span.en {
+        color: var(--text-muted);
+        margin-left: 4px;
+      }
+
+      .two-column {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 10px;
+      }
+
+      .card {
+        border-radius: 14px;
+        padding: 12px 12px 10px;
+        background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 60%),
+          rgba(15, 23, 42, 0.95);
+        border: 1px solid rgba(75, 85, 99, 0.9);
+      }
+
+      .card-title {
+        font-size: 13px;
+        font-weight: 600;
+        margin: 0 0 4px;
+      }
+
+      .card-title-en {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+      }
+
+      .card-body {
+        font-size: 13px;
+        color: var(--text-main);
+        line-height: 1.6;
+      }
+
+      .card-body-en {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 4px;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 10px;
+      }
+
+      .feature-item {
+        border-radius: 12px;
+        padding: 10px 10px 8px;
+        background: rgba(15, 23, 42, 0.96);
+        border: 1px solid rgba(55, 65, 81, 0.95);
+      }
+
+      .feature-title {
+        font-size: 12px;
+        font-weight: 600;
+        margin: 0 0 2px;
+        color: var(--accent);
+      }
+
+      .feature-title-en {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+      }
+
+      .feature-body {
+        font-size: 12px;
+        color: var(--text-main);
+        line-height: 1.6;
+      }
+
+      .feature-body-en {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .coming-soon {
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px dashed rgba(75, 85, 99, 0.8);
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .coming-soon strong {
+        color: var(--accent);
+      }
+
+      footer {
+        border-top: 1px solid rgba(31, 41, 55, 0.9);
+        margin-top: auto;
+      }
+
+      .footer-inner {
+        width: 100%;
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 16px 20px 22px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .footer-brand {
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .footer-contact {
+        text-align: right;
+      }
+
+      .footer-contact span {
+        display: block;
+      }
+
+      .footer-contact span.en {
+        margin-top: 2px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding-inline: 18px;
+        }
+
+        header.site-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          margin-bottom: 24px;
+        }
+
+        .header-tagline {
+          text-align: left;
+        }
+
+        .hero {
+          grid-template-columns: minmax(0, 1fr);
+          padding: 22px 18px 18px;
+        }
+
+        .hero-visual {
+          justify-content: flex-start;
+        }
+
+        .hero-card {
+          max-width: 100%;
+        }
+
+        section {
+          padding: 18px 16px 16px;
+        }
+
+        .two-column,
+        .features-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
+        }
+
+        .footer-contact {
+          text-align: left;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero-title-cn {
+          font-size: 22px;
+        }
+
+        .hero-title-en {
+          font-size: 12px;
+        }
+
+        .hero-copy {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="page-root">
+      <div class="container">
+        <header class="site-header">
+          <div class="logo-mark">
+            <div class="logo-icon" aria-hidden="true"></div>
+            <div>
+              <div class="logo-text-cn">光点工作室</div>
+              <div class="logo-text-en">LUMINOUS STUDIO</div>
+            </div>
+          </div>
+          <div class="header-tagline">
+            <div>
+              专注 <span class="highlight">音乐</span> 与
+              <span class="highlight">工具类 App</span>
+            </div>
+            <div>Indie tools &amp; music apps studio</div>
+          </div>
+        </header>
+
+        <main>
+          <section class="hero" aria-labelledby="hero-title-cn">
+            <div class="hero-main">
+              <div class="hero-eyebrow">Studio · Music · Tools</div>
+              <h1 id="hero-title-cn" class="hero-title-cn">
+                光点工作室 Luminous Studio
+              </h1>
+              <div class="hero-title-en">
+                Tools for music, light for practice.
+              </div>
+              <div class="hero-copy">
+                我们专注打造酷炫、好用的工具与音乐应用，让练习更高效，让灵感被看见。
+              </div>
+              <div class="hero-copy-en">
+                We build sleek, focused tools and music apps to make your
+                practice more efficient and your progress visible.
+              </div>
+              <div class="hero-cta-row">
+                <div class="btn-primary">
+                  <div class="btn-primary-label-cn">
+                    首款应用：钢琴视奏练习
+                  </div>
+                  <div class="btn-primary-label-en">
+                    Featured app: Piano Sight-Reading
+                  </div>
+                </div>
+                <div class="hero-pill">
+                  <span>Coming soon</span> · iOS / Android
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+              <div class="hero-card">
+                <div class="hero-card-header">
+                  <div>
+                    <div class="hero-card-title-cn">钢琴视奏练习</div>
+                    <div class="hero-card-title-en">Piano Sight-Reading</div>
+                  </div>
+                  <div class="hero-card-tag">每日训练 · Daily</div>
+                </div>
+                <div class="hero-piano-grid">
+                  <div class="hero-staff">
+                    <div class="hero-staff-lines"></div>
+                    <div class="hero-notes">
+                      <span>♩</span>
+                      <span>♪</span>
+                      <span>♬</span>
+                      <span>♩</span>
+                    </div>
+                  </div>
+                  <div class="hero-piano-keys">
+                    <div class="hero-key-white"></div>
+                    <div class="hero-key-black-wrap">
+                      <div class="hero-key-white"></div>
+                      <div class="hero-key-black"></div>
+                    </div>
+                    <div class="hero-key-white"></div>
+                    <div class="hero-key-black-wrap">
+                      <div class="hero-key-white"></div>
+                      <div class="hero-key-black"></div>
+                    </div>
+                    <div class="hero-key-white"></div>
+                    <div class="hero-key-white"></div>
+                    <div class="hero-key-black-wrap">
+                      <div class="hero-key-white"></div>
+                      <div class="hero-key-black"></div>
+                    </div>
+                    <div class="hero-key-white"></div>
+                    <div class="hero-key-black-wrap">
+                      <div class="hero-key-white"></div>
+                      <div class="hero-key-black"></div>
+                    </div>
+                    <div class="hero-key-white"></div>
+                    <div class="hero-key-black-wrap">
+                      <div class="hero-key-white"></div>
+                      <div class="hero-key-black"></div>
+                    </div>
+                    <div class="hero-key-white"></div>
+                    <div class="hero-key-white"></div>
+                    <div class="hero-key-black-wrap">
+                      <div class="hero-key-white"></div>
+                      <div class="hero-key-black"></div>
+                    </div>
+                    <div class="hero-key-white"></div>
+                    <div class="hero-key-black-wrap">
+                      <div class="hero-key-white"></div>
+                      <div class="hero-key-black"></div>
+                    </div>
+                    <div class="hero-key-white"></div>
+                  </div>
+                  <div class="hero-card-meta">
+                    <span>今日目标 / Today: <strong>15 min</strong></span>
+                    <span class="hero-card-dots">
+                      <span></span>
+                      <span class="active"></span>
+                      <span></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section aria-labelledby="about-title-cn">
+            <h2 id="about-title-cn" class="section-title">关于光点工作室</h2>
+            <div class="section-title-en">About Luminous Studio</div>
+            <div class="section-body">
+              <p>
+                光点工作室致力于用小而美的工具，陪伴音乐学习者与创作者。我们关注真实练习场景，从节奏、视奏，到练习统计和效率管理，希望用技术为每一次努力加一束光。
+              </p>
+              <p>
+                我们从音乐领域出发，同时也关注更广泛的工具类 App
+                使用场景，期待用简单专注的设计，解决练习和生活中的具体问题。
+              </p>
+              <div class="section-body-en">
+                Luminous Studio focuses on crafting small yet powerful tools for
+                music learners and creators. From rhythm and sight-reading to
+                practice tracking and productivity, we aim to add a beam of
+                light to every moment of effort.
+                <br />
+                Starting from music, we also explore broader utility app
+                scenarios, using focused design to solve real problems in both
+                practice and everyday life.
+              </div>
+
+              <div class="pill-list">
+                <div class="pill">
+                  工具类应用 <span class="en">/ Utility Apps</span>
+                </div>
+                <div class="pill">
+                  音乐向应用 <span class="en">/ Music-focused Apps</span>
+                </div>
+                <div class="pill">
+                  练习统计 <span class="en">/ Practice Tracking</span>
+                </div>
+                <div class="pill">
+                  专注体验 <span class="en">/ Focused Experience</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section aria-labelledby="products-title-cn">
+            <h2 id="products-title-cn" class="section-title">产品方向概览</h2>
+            <div class="section-title-en">Product Directions</div>
+            <div class="two-column">
+              <div class="card">
+                <div class="card-title">工具类应用</div>
+                <div class="card-title-en">Utility Apps</div>
+                <div class="card-body">
+                  围绕练习记录、专注计时、习惯养成等日常场景，提供简单纯粹的小工具，帮助你稳定输出、长期坚持。
+                </div>
+                <div class="card-body-en">
+                  We design small, focused utilities for daily use, from
+                  practice logs and focus timers to habit tracking, helping you
+                  maintain consistent output over the long term.
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-title">音乐相关应用</div>
+                <div class="card-title-en">Music-Focused Apps</div>
+                <div class="card-body">
+                  面向音乐学习者与爱好者，围绕视奏训练、节奏练习、听音训练等具体能力，打造高频可用的练习工具。
+                </div>
+                <div class="card-body-en">
+                  For music learners and enthusiasts, we create practical tools
+                  around skills like sight-reading, rhythm, and ear training,
+                  tailored for frequent, focused use.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section aria-labelledby="featured-app-title-cn">
+            <h2 id="featured-app-title-cn" class="section-title">
+              首款应用：钢琴视奏练习
+            </h2>
+            <div class="section-title-en">
+              Featured App: Piano Sight-Reading
+            </div>
+            <div class="section-body">
+              <p>
+                「钢琴视奏练习」是一款为钢琴学习者打造的日常视奏训练工具，提供随机谱例、难度分级与练习统计，让你在碎片时间也能高效提升视奏能力。
+              </p>
+              <p>
+                无论你是自学入门，还是正在备考音乐等级考试，都可以用它进行短时、高频、可量化的训练，逐步建立稳定的视奏手感。
+              </p>
+              <div class="section-body-en">
+                “Piano Sight-Reading” is a daily training companion for
+                pianists, offering random scores, difficulty levels, and
+                practice stats so you can boost your sight-reading skills even
+                in short breaks.
+                <br />
+                Whether you're self-learning or preparing for graded exams, it
+                supports short, frequent, and measurable practice sessions to
+                help you build a reliable sight-reading feel.
+              </div>
+            </div>
+
+            <div class="features-grid" aria-label="App Features">
+              <div class="feature-item">
+                <div class="feature-title">随机谱例 · Random Scores</div>
+                <div class="feature-title-en">New challenge every time</div>
+                <div class="feature-body">
+                  每次练习都会生成不同的练习谱例，避免“背熟谱子”带来的假进步，让视奏始终保持新鲜感。
+                </div>
+                <div class="feature-body-en">
+                  Each session brings different score snippets, preventing
+                  “memorized pieces” from faking progress and keeping your
+                  sight-reading practice fresh.
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-title">难度分级 · Level-Based</div>
+                <div class="feature-title-en">From beginner to advanced</div>
+                <div class="feature-body">
+                  从入门到进阶逐级扩展音域与节奏型，你可以按自己的状态选择合适的难度，循序渐进提升视奏能力。
+                </div>
+                <div class="feature-body-en">
+                  Difficulty levels gradually expand ranges and rhythm patterns,
+                  so you can choose the level that fits your current stage and
+                  improve step by step.
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-title">节拍与时限 · Tempo &amp; Time</div>
+                <div class="feature-title-en">Practice under real pressure</div>
+                <div class="feature-body">
+                  支持自定义练习速度与视奏时限，模拟真实演奏情境，训练在时间压力下快速理解与落键的能力。
+                </div>
+                <div class="feature-body-en">
+                  Customize tempo and sight-reading time limits to simulate
+                  real-playing conditions and train quick reading under time
+                  pressure.
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-title">练习统计 · Practice Stats</div>
+                <div class="feature-title-en">Progress you can see</div>
+                <div class="feature-body">
+                  记录每天的视奏次数、时长与难度分布，让你的投入与进步都可以被看见，帮助维持长期练习动力。
+                </div>
+                <div class="feature-body-en">
+                  Track daily sessions, time spent, and difficulty distribution
+                  so your effort and progress are visible, helping you stay
+                  motivated for long-term practice.
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-title">极简界面 · Minimal UI</div>
+                <div class="feature-title-en">Focus on the score</div>
+                <div class="feature-body">
+                  打开即练，无复杂操作和多余元素，把注意力还给谱面与双手，让每一分钟都落在真正的练习上。
+                </div>
+                <div class="feature-body-en">
+                  Launch and practice instantly with a distraction-free
+                  interface, so all your time goes into real playing, not
+                  navigation.
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-title">每日提醒 · Daily Reminders</div>
+                <div class="feature-title-en">Build steady habits</div>
+                <div class="feature-body">
+                  通过温和的练习提醒，帮助你养成稳定的视奏训练节奏，让进步成为日常的一部分。
+                </div>
+                <div class="feature-body-en">
+                  Gentle reminders help you maintain a steady sight-reading
+                  routine and turn progress into part of your everyday life.
+                </div>
+              </div>
+            </div>
+
+            <div class="coming-soon">
+              <strong>敬请期待 / Coming soon</strong><br />
+              应用正在开发中，预计将登陆移动端应用商店。未来我们也将开放反馈渠道，如果你对钢琴视奏训练有特别需求或想法，欢迎与我们一起打磨更好用的练习工具。<br />
+              The app is currently in development and is planned to launch on
+              mobile app stores. We will open feedback channels as we go — if
+              you have ideas for piano sight-reading practice, we would love to
+              shape a better tool together with you.
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <footer>
+        <div class="footer-inner">
+          <div class="footer-brand">
+            © 光点工作室 · Luminous Studio
+          </div>
+          <div class="footer-contact">
+            <span>联系邮箱 / 社交账号 敬请期待</span>
+            <span class="en">Contact email / social links coming soon.</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
