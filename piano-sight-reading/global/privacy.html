@@ -3,33 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Piano Sight Reading – Privacy Policy / 隐私政策</title>
+  <title>Solfeggio – Privacy Policy / 隐私政策</title>
+  <style>
+    .lang-section { display: none; }
+    .lang-section.active { display: block; }
+  </style>
 </head>
 <body>
-  <h1>Piano Sight Reading – Privacy Policy / 隐私政策</h1>
+  <h1>Solfeggio – Privacy Policy / 隐私政策</h1>
   <p><strong>Last updated / 最后更新日期：</strong> 2026-03-13</p>
 
-  <nav>
-    <h2>Contents / 目录</h2>
-    <ol>
-      <li><a href="#en-intro">English Version</a></li>
-      <li><a href="#zh-intro">中文版</a></li>
-    </ol>
-  </nav>
+  <div id="lang-switcher" style="margin: 8px 0;">
+    <button onclick="switchLang('en')">English</button>
+    |
+    <button onclick="switchLang('zh')">中文</button>
+  </div>
 
   <hr />
 
   <!-- English Version -->
-  <section id="en-intro">
+  <section id="en-intro" class="lang-section active">
     <h2>Privacy Policy (English)</h2>
 
     <h3>1. Introduction and Scope</h3>
     <p>
       This Privacy Policy applies to the mobile application
-      <strong>"Piano Sight Reading"</strong> (the "App"), provided by
+      <strong>"Solfeggio"</strong> (also known as 钢琴视奏练习; the "App"), provided by
       <strong>Lumen Labs</strong> ("we", "our", or "us"). It explains how we
-      collect, use, and protect information when you use the App as an
-      overseas user.
+      collect, use, and protect information when you use the App.
     </p>
     <p>
       By downloading, installing, or using the App, you agree to the
@@ -43,261 +44,315 @@
       collect personally identifiable information such as your name, email
       address, or phone number directly through the App.
     </p>
+
+    <p><strong>Information stored only on your device (local data)</strong></p>
     <p>
-      However, certain information may be collected automatically through
-      third-party analytics and advertising services integrated into the App.
-      This information may include:
+      The App stores data locally on your device using local storage technologies
+      (such as <strong>Hive / hive_flutter</strong>), including practice records,
+      progress, level, achievements, settings, and notification schedules (e.g.
+      for practice reminders). This data is not sent to our servers and is not
+      backed up by us. If you uninstall the App or clear app data, this
+      information cannot be recovered.
+    </p>
+
+    <p><strong>Information that may be collected by third-party services</strong></p>
+    <p>
+      The App integrates third-party advertising and analytics services. These
+      services may automatically collect information such as:
     </p>
     <ul>
-      <li>Device information (such as device model, operating system version, language settings);</li>
-      <li>Usage data (such as screens you view, features you use, and session duration);</li>
-      <li>Approximate location information (for example, coarse location inferred from IP address);</li>
-      <li>Advertising identifiers (such as Google Advertising ID or similar identifiers);</li>
+      <li>Device information (e.g. device model, operating system version, language, Android SDK version for permission and compatibility logic);</li>
+      <li>Usage data (e.g. screens or features you use, session duration);</li>
+      <li>Approximate location (e.g. coarse location inferred from IP);</li>
+      <li>Advertising identifiers (e.g. Google Advertising ID);</li>
       <li>Crash logs and performance data.</li>
     </ul>
+    <p>
+      We do not control the data collected by these third parties. Their
+      practices are governed by their own privacy policies.
+    </p>
 
     <h3>3. How We Use Information</h3>
     <p>We use the information described above for purposes such as:</p>
     <ul>
       <li>Improving the stability, performance, and features of the App;</li>
-      <li>Understanding how users interact with the App and optimizing the training and practice experience;</li>
+      <li>Understanding how users interact with the App and optimizing the learning and practice experience;</li>
       <li>Providing, maintaining, and improving our services;</li>
-      <li>Showing more relevant advertisements through third-party advertising partners;</li>
-      <li>Detecting, preventing, and addressing technical issues and potential misuse.</li>
+      <li>Showing relevant advertisements through our advertising partners;</li>
+      <li>Detecting, preventing, and addressing technical issues and misuse;</li>
+      <li>Using device information where necessary for permission handling (e.g. notification, Bluetooth for MIDI) and compatibility.</li>
     </ul>
 
     <h3>4. Third-Party Services and SDKs</h3>
     <p>
-      We may use third-party services to provide analytics and advertising
-      within the App. These services may collect and process information as
-      described in their own privacy policies. Such services may include,
-      but are not limited to:
-    </p>
-    <ul>
-      <li>Third-party analytics services (for example, Firebase / Google Analytics);</li>
-      <li>Third-party advertising networks (for example, Google AdMob).</li>
-    </ul>
-    <p>
-      The data collected by these third parties may include device
-      information, usage data, advertising identifiers, and coarse location
-      information. We do not have direct control over how these third parties
-      use the information they collect, and their use is governed by their
+      The App uses the following types of third-party services and libraries,
+      which may collect or process data as described in their own privacy policies.
+      For more details on each provider’s data practices, please refer to their
       respective privacy policies.
     </p>
+    <ul>
+      <li><strong>Advertising:</strong> <strong>Google Mobile Ads (AdMob)</strong> and other third-party ad networks (e.g. through our overseas ad SDK, <strong>ads_sdk_overseas</strong>). These may collect device information, advertising identifiers, and coarse location to deliver and measure ads. Privacy Policy (Google/AdMob): <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a>.</li>
+      <li><strong>Analytics:</strong> We may use analytics services such as <strong>Google Analytics</strong>, <strong>Firebase</strong>, or other partners (e.g. <strong>Umeng</strong> where applicable) to understand usage and improve the App. These services may collect device and usage data. Privacy Policy (Umeng): <a href="https://www.umeng.com/policy">https://www.umeng.com/policy</a>. For Google analytics services, see also <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a>.</li>
+      <li><strong>Local storage:</strong> <strong>Hive / hive_flutter</strong> — used to store practice records, progress, level, achievements, and settings locally on your device. This data is not uploaded to our servers.</li>
+      <li><strong>Device and permissions:</strong> <strong>device_info_plus</strong> (to obtain device and system information for permission and compatibility logic), <strong>permission_handler</strong> (to request permissions such as notifications and Bluetooth for features like practice reminders and external MIDI devices).</li>
+      <li><strong>Local notifications:</strong> <strong>flutter_local_notifications</strong>, <strong>timezone</strong>, <strong>flutter_timezone</strong> — used only for local practice reminders. Notification schedules are stored on your device and are not uploaded to our servers.</li>
+      <li><strong>Network and external content:</strong> If the App sends data to our servers or third parties (e.g. via <strong>dio</strong>), we use it for the purposes described in this policy. When you open external links or in-app web pages (<strong>url_launcher</strong>, <strong>flutter_inappwebview</strong>), the privacy practices of those third-party sites apply; we do not control their data collection.</li>
+      <li><strong>Other functionality:</strong> <strong>package_info_plus</strong> (app version and related information for support and compatibility). The App also uses libraries for audio and MIDI functionality (e.g. <strong>flutter_midi_pro</strong>, <strong>flutter_pitch_detection</strong>, <strong>flutter_midi_command</strong>). Audio and MIDI processing is performed locally on your device; we do not upload audio content.</li>
+    </ul>
     <p>
-      We recommend that you review the privacy policies of these providers
-      for more details on their data practices.
+      We recommend that you review the privacy policies of Google (including
+      AdMob and Google Analytics), and any other providers we link to, for
+      details on their data practices.
     </p>
 
-    <h3>5. Data Storage and Security</h3>
+    <h3>5. Permissions We Request</h3>
     <p>
-      Data collected through the App may be processed and stored on the
-      servers of our third-party service providers. We take reasonable
-      measures to protect information processed through the App and to choose
-      service providers that apply appropriate security measures.
+      The App may request the following device permissions. We only request permissions necessary for the features described below:
     </p>
+    <ul>
+      <li>
+        <strong>INTERNET</strong><br />
+        Purpose: Required for loading and displaying in-app advertisements, sending anonymous usage statistics to third-party analytics services, and downloading any online content.
+      </li>
+      <li>
+        <strong>POST_NOTIFICATIONS, SCHEDULE_EXACT_ALARM, USE_EXACT_ALARM, RECEIVE_BOOT_COMPLETED</strong><br />
+        Purpose: Used to schedule and deliver local practice reminder notifications at the time you set. RECEIVE_BOOT_COMPLETED is used to reschedule your reminders after a device reboot so they are not lost. We do not use these permissions to send push messages from our servers.
+      </li>
+      <li>
+        <strong>VIBRATE</strong><br />
+        Purpose: Used to provide optional haptic feedback (vibration) during in-app interactions where you have enabled this setting.
+      </li>
+      <li>
+        <strong>RECORD_AUDIO (Microphone)</strong><br />
+        Purpose: Used exclusively for the "piano audio recognition" feature, which listens to the sound of a real acoustic or digital piano through your device microphone to identify the notes you are playing in real time. Audio is processed locally on your device and is NOT recorded, stored, or uploaded to any server.
+      </li>
+      <li>
+        <strong>BLUETOOTH_CONNECT, BLUETOOTH_SCAN, ACCESS_FINE_LOCATION (Android 11 and below)</strong><br />
+        Purpose: Used to discover and connect to external MIDI devices (e.g. MIDI keyboards or controllers) via Bluetooth Low Energy (BLE). ACCESS_FINE_LOCATION is required on Android 11 and below because the operating system requires it for BLE scanning; the App does not use your location for any other purpose. On Android 12 and above, we use BLUETOOTH_SCAN with the neverForLocation flag so that your location is not accessed.
+      </li>
+    </ul>
     <p>
-      However, please note that no method of transmission over the Internet
-      or method of electronic storage is 100% secure. While we strive to use
-      commercially acceptable means to protect your information, we cannot
-      guarantee its absolute security.
+      We do not use any of the above permissions for purposes other than those described here. You can revoke permissions at any time in your device settings; revoking a permission will disable the related feature.
     </p>
 
-    <h3>6. Children&apos;s Privacy</h3>
+    <h3>6. Data Storage and Security</h3>
+    <p>
+      Data collected through third-party SDKs may be processed and stored on
+      those providers’ servers. We take reasonable measures to work with
+      providers that apply appropriate security practices. Local data (e.g.
+      practice records, settings) remains on your device and is not
+      transmitted to us for storage.
+    </p>
+    <p>
+      No method of transmission over the Internet or electronic storage is
+      100% secure. While we strive to use commercially reasonable measures, we
+      cannot guarantee absolute security.
+    </p>
+
+    <h3>7. Children's Privacy</h3>
     <p>
       The App is primarily intended for general users and music learners and
-      is not specifically designed for children under the age of 13.
-      Nevertheless, the content of the App is educational and does not
-      contain inappropriate material, and children under 13 may use the App
-      with the knowledge and consent of their parent or legal guardian.
+      is not specifically designed for children under 13. The content is
+      suitable for learning; children under 13 may use the App with the
+      knowledge and consent of a parent or legal guardian.
     </p>
     <p>
       We do not knowingly collect personally identifiable information from
-      children under 13. If we become aware that we have unintentionally
-      collected personally identifiable information from a child under 13, we
-      will take steps to delete such information as soon as reasonably
-      possible. If you are a parent or guardian and believe that your child
-      has provided us with such information, please contact us.
+      children under 13. If we become aware that we have collected such
+      information from a child under 13, we will take steps to delete it as
+      soon as reasonably possible. If you are a parent or guardian and
+      believe your child has provided us with such information, please contact
+      us.
     </p>
 
-    <h3>7. Your Choices</h3>
-    <p>You may have certain choices in relation to the information we collect:</p>
+    <h3>8. Your Choices</h3>
     <ul>
-      <li>
-        <strong>Advertising settings:</strong> You can reset your advertising
-        identifier or limit ad tracking in your device settings. These
-        options vary by platform and device.
-      </li>
-      <li>
-        <strong>Analytics and usage data:</strong> Some platforms or
-        third-party services may provide opt-out options for analytics
-        tracking. Please refer to the privacy settings available on your
-        device or the relevant third-party service.
-      </li>
-      <li>
-        <strong>Uninstalling the App:</strong> You can stop all information
-        collection by uninstalling the App from your device.
-      </li>
+      <li><strong>Advertising:</strong> You can reset your advertising identifier or limit ad tracking in your device settings.</li>
+      <li><strong>Local data:</strong> You can clear app data or uninstall the App; all local progress, records, and settings will be lost and we cannot restore them.</li>
+      <li><strong>Uninstalling:</strong> Uninstalling the App will stop further collection of data by the App; third-party SDKs may have already collected data as described in their policies.</li>
     </ul>
 
-    <h3>8. International Use</h3>
+    <h3>9. International Use</h3>
     <p>
-      Information collected through the App may be transferred to and
-      processed in countries or regions other than your own. By using the
-      App, you consent to the transfer of information to such countries or
-      regions, which may have different data protection laws than your
-      country.
+      Information collected by third-party services may be transferred to and
+      processed in countries other than your own. By using the App, you
+      consent to such transfer and processing, which may be subject to
+      different data protection laws.
     </p>
 
-    <h3>9. Changes to This Privacy Policy</h3>
+    <h3>10. Changes to This Privacy Policy</h3>
     <p>
-      We may update this Privacy Policy from time to time. When we do, we
-      will revise the "Last updated" date at the top of this page. Your
-      continued use of the App after any changes take effect will constitute
-      your acceptance of the revised Privacy Policy.
+      We may update this Privacy Policy from time to time. We will revise the
+      "Last updated" date at the top of this page. Your continued use of the
+      App after changes take effect constitutes acceptance of the updated
+      policy.
     </p>
 
-    <h3>10. Contact Us</h3>
+    <h3>11. Contact Us</h3>
     <p>
-      If you have any questions or concerns about this Privacy Policy or our
-      data practices, please contact us:
+      If you have any questions about this Privacy Policy or our data
+      practices, please contact us:
     </p>
     <ul>
       <li><strong>Developer:</strong> Lumen Labs</li>
-      <li>
-        <strong>Contact:</strong>
-        <code>your-email@example.com</code>
-        (please replace this placeholder with your actual contact email)
-      </li>
+      <li><strong>Contact:</strong> <a href="mailto:support@lumen-labs.app">support@lumen-labs.app</a></li>
     </ul>
   </section>
 
   <hr />
 
   <!-- Chinese Version -->
-  <section id="zh-intro">
+  <section id="zh-intro" class="lang-section">
     <h2>隐私政策（中文版）</h2>
 
-    <h3>1. 简介与适用范围</h3>
+    <h3>一、简介与适用范围</h3>
     <p>
       本隐私政策适用于由 <strong>Lumen Labs</strong>（下称“我们”）提供的移动应用程序
-      <strong>《Piano Sight Reading》</strong>（下称“本应用”），用于说明我们在您使用本应用时
-      如何收集、使用和保护相关信息。本政策面向海外用户。
+      <strong>《钢琴视奏练习》</strong>（英文名 Solfeggio；下称“本应用”），用于说明我们在您使用本应用时如何收集、使用和保护相关信息。
     </p>
     <p>
-      当您下载、安装或使用本应用，即表示您同意按照本隐私政策收集和使用您的相关信息。
-      如您不同意本隐私政策的任何内容，请勿使用本应用。
+      当您下载、安装或使用本应用，即表示您同意按照本隐私政策收集和使用您的相关信息。如您不同意本政策的任何内容，请勿使用本应用。
     </p>
 
-    <h3>2. 我们收集的信息</h3>
+    <h3>二、我们收集的信息</h3>
     <p>
-      我们不会要求您在应用内注册账户，也不会通过本应用主动收集您的姓名、邮箱地址、电话等可直接识别您个人身份的信息。
+      我们不会要求您在应用内注册账户，也不会通过本应用主动收集您的姓名、邮箱、电话等可直接识别您个人身份的信息。
     </p>
+
+    <p><strong>仅存储在您设备上的信息（本地数据）</strong></p>
     <p>
-      但为提升产品质量和广告效果，本应用可能通过集成的第三方分析和广告服务自动收集某些信息，包括但不限于：
+      本应用使用本地存储技术（如 <strong>Hive / hive_flutter</strong>）在您设备本地保存数据，包括练习记录、进度、等级、成就、设置以及通知日程（例如练习提醒）。这些数据不会上传到我们的服务器，我们也不对其进行备份。若您卸载本应用或清除应用数据，上述信息将无法恢复。
+    </p>
+
+    <p><strong>可能由第三方服务收集的信息</strong></p>
+    <p>
+      本应用集成了第三方广告与统计服务。这些服务可能会自动收集如下类型的信息：
     </p>
     <ul>
-      <li>设备信息（例如：设备型号、操作系统版本、系统语言等）；</li>
-      <li>使用数据（例如：您访问的页面、使用的功能、使用时长等）；</li>
-      <li>大致位置信息（例如：基于 IP 地址推断的粗略地理位置）；</li>
-      <li>广告标识符（例如：Google Advertising ID 或类似标识）；</li>
-      <li>崩溃日志和性能数据。</li>
+      <li>设备信息（如设备型号、操作系统版本、语言、Android SDK 版本等，用于权限与兼容性逻辑）；</li>
+      <li>使用数据（如您使用的页面或功能、使用时长）；</li>
+      <li>大致位置信息（如基于 IP 推断的粗略位置）；</li>
+      <li>广告标识符（如 Google 广告 ID）；</li>
+      <li>崩溃日志与性能数据。</li>
     </ul>
+    <p>
+      我们无法控制上述第三方所收集的数据，其行为受其自身隐私政策约束。
+    </p>
 
-    <h3>3. 我们如何使用这些信息</h3>
+    <h3>三、我们如何使用这些信息</h3>
     <p>我们可能将上述信息用于以下用途：</p>
     <ul>
-      <li>改进本应用的稳定性、性能和功能；</li>
-      <li>了解用户如何使用本应用，并据此优化视奏训练和练习体验；</li>
-      <li>提供、维护和改进我们的服务；</li>
-      <li>通过第三方广告合作伙伴展示与您更相关的广告；</li>
-      <li>发现、预防并处理技术问题或潜在滥用行为。</li>
+      <li>改进本应用的稳定性、性能与功能；</li>
+      <li>了解用户如何使用本应用，并据此优化学习与练习体验；</li>
+      <li>提供、维护与改进我们的服务；</li>
+      <li>通过广告合作伙伴展示与您更相关的广告；</li>
+      <li>发现、预防并处理技术问题与滥用行为；</li>
+      <li>在必要时使用设备信息处理权限（如通知、蓝牙连接 MIDI）及兼容性。</li>
     </ul>
 
-    <h3>4. 第三方服务与 SDK</h3>
+    <h3>四、第三方服务与 SDK</h3>
     <p>
-      为提供统计分析和广告投放功能，我们可能在本应用中使用第三方服务。
-      这些第三方服务在运行过程中可能会收集和处理前述信息，其数据处理行为受各自的隐私政策约束。
-      相关服务可能包括但不限于：
+      本应用使用以下类型的第三方服务与库，其可能按各自隐私政策收集或处理数据。
+      关于各提供方的数据处理方式，请参阅其隐私政策。
     </p>
     <ul>
-      <li>第三方分析服务（例如：Firebase / Google Analytics 等）；</li>
-      <li>第三方广告网络（例如：Google AdMob 等）。</li>
+      <li><strong>广告：</strong><strong>Google Mobile Ads（AdMob）</strong> 及其他第三方广告网络（例如通过我们使用的海外广告 SDK：<strong>ads_sdk_overseas</strong>）。这些服务可能收集设备信息、广告标识符、大致位置等用于投放与衡量广告。隐私政策（Google/AdMob）：<a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a>。</li>
+      <li><strong>统计与分析：</strong>我们可能使用统计服务（如 <strong>Google Analytics</strong>、<strong>Firebase</strong>，或在适用情况下其他合作伙伴如 <strong>友盟</strong> 等）以了解使用情况并改进本应用。这些服务可能收集设备与使用数据。友盟隐私政策：<a href="https://www.umeng.com/policy">https://www.umeng.com/policy</a>；Google 相关服务隐私政策：<a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a>。</li>
+      <li><strong>本地存储：</strong><strong>Hive / hive_flutter</strong> — 用于在您设备本地保存练习记录、进度、等级、成就与设置。该等数据不会上传至我们的服务器。</li>
+      <li><strong>设备与权限：</strong><strong>device_info_plus</strong>（用于获取设备与系统信息以配合权限与兼容性逻辑）、<strong>permission_handler</strong>（用于申请通知、蓝牙等权限，以支持练习提醒、外接 MIDI 设备等功能）。</li>
+      <li><strong>本地通知：</strong><strong>flutter_local_notifications</strong>、<strong>timezone</strong>、<strong>flutter_timezone</strong> — 仅用于本地练习提醒。提醒日程保存在您设备上，不会上传至我们的服务器。</li>
+      <li><strong>网络与外部内容：</strong>若本应用向我们的服务器或第三方发送数据（例如通过 <strong>dio</strong>），我们将按本政策所述用途使用。当您打开外部链接或应用内网页（<strong>url_launcher</strong>、<strong>flutter_inappwebview</strong>）时，适用该第三方网站的隐私政策；我们无法控制其数据收集行为。</li>
+      <li><strong>其他功能：</strong><strong>package_info_plus</strong>（应用版本等信息，用于支持与兼容性）。本应用还使用与音频、MIDI 相关的库（如 <strong>flutter_midi_pro</strong>、<strong>flutter_pitch_detection</strong>、<strong>flutter_midi_command</strong>）。音频与 MIDI 处理均在您设备本地完成；我们不上传音频内容。</li>
     </ul>
     <p>
-      这些第三方可能会收集设备信息、使用数据、广告标识符、大致位置信息等。
-      我们无法直接控制这些第三方如何使用其收集的数据，其具体做法请参考各自的隐私政策。
-    </p>
-    <p>我们建议您查阅上述服务提供方的隐私政策，以了解其数据处理方式和选择权。</p>
-
-    <h3>5. 数据存储与安全</h3>
-    <p>
-      通过本应用收集的相关数据，可能会在我们的第三方服务提供商的服务器上进行处理和存储。
-      我们会采取合理的措施保护通过本应用处理的信息，并尽量选择具备适当安全措施的服务提供商。
-    </p>
-    <p>
-      但请您理解，任何通过互联网进行的传输或电子存储方式都无法保证绝对安全。
-      虽然我们会尽力采取商业上合理的手段保护您的信息，但无法对其安全性作出完全保证。
+      建议您查阅 Google（含 AdMob、Google Analytics）及我们提供的其他服务提供方的隐私政策，以了解其数据处理方式。
     </p>
 
-    <h3>6. 儿童隐私</h3>
+    <h3>五、我们申请的权限</h3>
     <p>
-      本应用主要面向一般用户和音乐学习者，并非专门为 13 岁以下儿童设计。
-      本应用内容为音乐学习相关，不包含不适宜儿童的内容，在监护人知情并同意的情况下，
-      13 岁以下儿童可以使用本应用。
+      本应用可能会申请以下设备权限。我们仅申请实现下述功能所必要的权限：
     </p>
-    <p>
-      我们不会有意针对 13 岁以下儿童收集可识别其个人身份的信息。
-      如我们获知在未事先知情的情况下收集到了 13 岁以下儿童的个人身份信息，
-      将在合理可行的范围内尽快删除相关数据。
-      如您是儿童的父母或法定监护人，并认为您的孩子向我们提供了此类信息，请与我们联系。
-    </p>
-
-    <h3>7. 您的选择</h3>
-    <p>对于信息的收集和使用，您通常拥有以下选择：</p>
     <ul>
       <li>
-        <strong>广告设置：</strong>
-        您可以在设备系统设置中重置广告标识符，或限制个性化广告跟踪。
-        具体选项因平台和设备而异。
+        <strong>INTERNET（网络访问）</strong><br />
+        用途：用于在应用内加载和展示广告，以及向第三方统计服务发送匿名使用数据。
       </li>
       <li>
-        <strong>分析与使用数据：</strong>
-        某些平台或第三方服务可能提供关闭或限制统计分析的选项，您可以查看设备隐私设置或相关服务的说明。
+        <strong>POST_NOTIFICATIONS / SCHEDULE_EXACT_ALARM / USE_EXACT_ALARM / RECEIVE_BOOT_COMPLETED（通知与定时）</strong><br />
+        用途：用于在您设定的时间发送本地练习提醒通知。RECEIVE_BOOT_COMPLETED 用于在设备重启后自动恢复您的提醒计划，确保提醒不因重启而丢失。我们不会通过这些权限向您推送服务器消息。
       </li>
       <li>
-        <strong>卸载应用：</strong>
-        您可以通过卸载本应用来停止后续的数据收集。
+        <strong>VIBRATE（振动）</strong><br />
+        用途：在您开启振动反馈设置时，提供可选的操作振动反馈。
+      </li>
+      <li>
+        <strong>RECORD_AUDIO（麦克风/录音）</strong><br />
+        用途：仅用于「钢琴拾音识谱」功能：通过设备麦克风实时监听真实钢琴（包括原声钢琴和数码钢琴）的声音，识别您演奏的音符，帮助您与乐谱进行对比练习。音频处理在您的设备本地进行，不会录制、存储或上传到任何服务器。
+      </li>
+      <li>
+        <strong>BLUETOOTH_CONNECT / BLUETOOTH_SCAN / ACCESS_FINE_LOCATION（Android 11 及以下）（蓝牙）</strong><br />
+        用途：用于扫描和连接外部蓝牙 MIDI 设备（如蓝牙 MIDI 键盘或控制器），通过低功耗蓝牙（BLE）实现 MIDI 连接。ACCESS_FINE_LOCATION 仅在 Android 11 及以下版本中被申请，这是因为该系统版本要求进行 BLE 扫描必须获得此权限；本应用不会将位置权限用于任何其他目的。在 Android 12 及以上版本，我们使用 neverForLocation 标志申请蓝牙权限，不访问您的位置信息。
       </li>
     </ul>
-
-    <h3>8. 跨境传输</h3>
     <p>
-      通过本应用收集的相关信息，可能会在您所在国家或地区之外的服务器上被传输、存储和处理。
-      当您使用本应用时，即视为您同意将相关信息传输至上述国家或地区，并同意在该等地区适用的数据保护规则下进行处理。
+      上述权限仅用于此处描述的功能目的。您可随时在设备设置中撤销相关权限；撤销权限将导致对应功能无法使用。
     </p>
 
-    <h3>9. 本隐私政策的变更</h3>
+    <h3>六、数据存储与安全</h3>
     <p>
-      我们可能会不时更新本隐私政策。
-      当本政策发生重大变更时，我们将在本页面更新“最后更新日期”。
-      在变更生效后，您继续使用本应用将被视为您接受更新后的隐私政策。
+      通过第三方 SDK 收集的数据可能在这些服务商的服务器上被处理与存储。我们会尽量选择采取合理安全措施的服务商。您的本地数据（如练习记录、设置）仅保存在您设备上，不会上传至我们存储。
+    </p>
+    <p>
+      任何通过互联网的传输或电子存储方式均无法保证绝对安全。我们会尽力采用合理措施，但无法对安全性做出绝对保证。
     </p>
 
-    <h3>10. 联系我们</h3>
-    <p>如您对本隐私政策或我们的数据处理方式有任何疑问或建议，请与我们联系：</p>
+    <h3>七、儿童隐私</h3>
+    <p>
+      本应用主要面向一般用户与音乐学习者，并非专门为 13 岁以下儿童设计。应用内容适合学习使用；在监护人知情并同意的前提下，13 岁以下儿童可以使用本应用。
+    </p>
+    <p>
+      我们不会有意收集 13 岁以下儿童的可识别个人身份信息。若我们获知在未事先知情的情况下收集到此类信息，将在合理期限内尽快删除。如您是儿童的父母或法定监护人且认为您的孩子向我们提供了此类信息，请与我们联系。
+    </p>
+
+    <h3>八、您的选择</h3>
+    <ul>
+      <li><strong>广告：</strong>您可以在设备设置中重置广告标识符或限制广告跟踪。</li>
+      <li><strong>本地数据：</strong>您可清除应用数据或卸载本应用；所有本地进度、记录与设置将丢失，我们无法恢复。</li>
+      <li><strong>卸载：</strong>卸载本应用将停止本应用对数据的进一步收集；第三方 SDK 可能已按各自政策收集了数据。</li>
+    </ul>
+
+    <h3>九、跨境传输</h3>
+    <p>
+      第三方服务收集的信息可能会被传输至您所在国家/地区以外的服务器并在此处理。使用本应用即表示您同意该等传输与处理，并知悉其可能适用不同的数据保护法律。
+    </p>
+
+    <h3>十、本隐私政策的变更</h3>
+    <p>
+      我们可能会不时更新本隐私政策。更新时我们会修改本页顶部的“最后更新日期”。您在变更生效后继续使用本应用，即视为接受更新后的政策。
+    </p>
+
+    <h3>十一、联系我们</h3>
+    <p>如您对本隐私政策或我们的数据处理方式有任何疑问，请通过以下方式联系我们：</p>
     <ul>
       <li><strong>开发者（Developer）：</strong> Lumen Labs</li>
-      <li>
-        <strong>联系邮箱（Contact）：</strong>
-        <code>your-email@example.com</code>
-        （请将此占位符替换为你的实际联系邮箱，例如 <code>support@lumen-labs.app</code>）
-      </li>
+      <li><strong>联系邮箱（Contact）：</strong> <a href="mailto:support@lumen-labs.app">support@lumen-labs.app</a></li>
     </ul>
-    <p>
-      如本隐私政策的中英文版本存在不一致或冲突，以英文版本为准；中文版为便于理解的参考译本。
-    </p>
+    <p>如中英文版本存在冲突，以英文版本为准。</p>
   </section>
+  <script>
+    function switchLang(lang) {
+      document.querySelectorAll('.lang-section').forEach(function (s) {
+        s.classList.remove('active');
+      });
+      var targetId = lang === 'en' ? 'en-intro' : 'zh-intro';
+      var target = document.getElementById(targetId);
+      if (target) {
+        target.classList.add('active');
+      }
+    }
+    // 默认显示英文
+    switchLang('en');
+  </script>
 </body>
 </html>
 
